@@ -58,7 +58,9 @@ app.use("/api/messages",messageRouter)
 
 // Use uppercase PORT from .env or fallback to 5000
 
+// Connect to mongodb
 
+await connectDB();
 
 
 if(process.env.NODE_ENV !== "production"){
