@@ -57,10 +57,24 @@ app.use("/api/auth",userrouter)
 app.use("/api/messages",messageRouter)
 
 // Use uppercase PORT from .env or fallback to 5000
-const PORT = process.env.PORT || 5000;
 
-server.listen(PORT, () =>{
-   connectDB()
-  console.log(`server is running on http://localhost:${PORT}`)
 
-});
+
+
+if(process.env.NODE_ENV !== "production"){
+
+
+  const PORT = process.env.PORT || 5000;
+  
+  server.listen(PORT, () =>{
+     connectDB()
+    console.log(`server is running on http://localhost:${PORT}`)
+  
+  });
+
+
+}
+
+// Export server for Vercel
+
+export default server;
