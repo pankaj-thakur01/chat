@@ -12,7 +12,6 @@ const [messages ,setmessages] = useState([]);
 const [users , setusers] = useState([])
 const [selecteduser , setSelecteduser] = useState(null)
 const [unseenMessages , setunseenMessages] = useState({})
-console.log(unseenMessages)
 const {socket , axios} = useContext(AuthContext);
 
 // function to get all users for sidebar
@@ -21,13 +20,11 @@ const getUser = async ()=>{
 
     try {
      const {data} =  await axios.get("/api/messages/users");
-     console.log(data)
 if(data.success){
   setusers(data.users)
   console.log(data.users)
 setunseenMessages(data.unseenMessages || {});
 
-console.log(data.unseenMessages)
 }
 
     } catch (error) {
@@ -39,10 +36,8 @@ console.log(data.unseenMessages)
 // function to get messages for seleted user
 
 const getMessages = async (userId) => {
-    console.log(userId)
   try {
     const { data } = await axios.get(`/api/messages/${userId}`);
-    console.log(data)
     if (data.success) {
       setmessages(data.messages);
     } else {
@@ -60,7 +55,8 @@ const getMessages = async (userId) => {
 const sendMessage = async (messageData)=>{
 try {
     const {data} = await axios.post(`/api/messages/send/${selecteduser._id}`,messageData)
-if(data.success){
+    console.log(data)
+if(!data.success){
     setmessages((prevMessages)=>[...prevMessages,data.newMessage])
 }else{
     toast.error(data.message);
